@@ -63,6 +63,15 @@ VITE_FIREBASE_MESSAGING_SENDER_ID=
 VITE_FIREBASE_APP_ID=
 ```
 
+```
+VITE_FIREBASE_API_KEY=AIzaSyBebywPmrxl2aUuDYAQ2swMHhIwNl9tgHk
+VITE_FIREBASE_AUTH_DOMAIN=cookbook-richardt.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID=cookbook-richardt
+VITE_FIREBASE_STORAGE_BUCKET=cookbook-richardt.firebasestorage.app
+VITE_FIREBASE_MESSAGING_SENDER_ID=719925763263
+VITE_FIREBASE_APP_ID=1:719925763263:web:d693bff11aab58af1aba0a
+```
+
 3. Using the information in `firebaseConfig` that you recently saved, copy and paste the corresponding information into `VITE_FIREBASE_API_KEY=`, `VITE_FIREBASE_AUTH_DOMAIN=`, and so on for all 6 `.env` variables. IMPORTANT: Do NOT include the quotation marks!!!! This could mess up your code. ALSO, DO NOT USE ANY SPACES!!
 4. IMPORTANT FOR GRADING: Copy and paste that information into this `README.md` (e.g. the code block above step 3 and after step 2 of this section) so that we can create a `.env` file when we grade your submission.
 5. Inside of `src/firebaseConfig.ts`, replace `const firebaseConfig = { ... }` with the following code block:

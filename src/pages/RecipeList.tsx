@@ -1,4 +1,3 @@
-// TODO: Import ToggleButton (and any icons if you use any)
 import {
   Table,
   TableBody,
@@ -7,8 +6,9 @@ import {
   TableRow,
   Button,
   IconButton,
+  ToggleButton
 } from "@mui/material";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import AddRecipe from "../components/AddRecipe";
 import RecipeOverlay from "../components/RecipeOverlay";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -36,28 +36,21 @@ const RecipeList = ({
   const [addModal, setAddModal] = useState<boolean>(false);
   const [currRecipe, setCurrRecipe] = useState<Recipe | null>(null);
 
-  // TODO:  Create a state favoritesOnly and set it to initially be false.
-  //        It should be a boolean.
+  const [favoritesOnly, setFavoritesOnly] = useState<boolean>(false);
 
   const handleAddAndClose = (recipe: Omit<Recipe, "id">) => {
     handleAddRecipe(recipe);
     setAddModal(false);
   };
 
-  // TODO: Use useMemo to filter recipes only when needed.
-  //   - The dependencies should be recipes and showFavoritesOnly
-  //  For the arrow functino you pass into useMemo as the first  parameter:
-  //     - first, have an if statement that returns recipes if favoritesOnly is false
-  //     - After the if statement, return only favorited recipes using .filter()
-  // const filteredRecipes =
+  const filteredRecipes = useMemo(() => {
+    if (!favoritesOnly) {
+      return recipes;
+    } 
+    return recipes.filter(recipe => recipe.isFavorite);
+  }, [favoritesOnly, recipes])
 
 
-  // TODO: Add a ToggleButton that will allow you to toggle if showFavorites is true or false.
-  //  Hint: Some attributes worth setting for ToggleButton
-  //  are value, selected (which should be tied to your state var),
-  //  onChange (use an arrow function that calls setFavoritesOnly),
-  //  and size.
-  //  If you'd like, you can use a MaterialUI icon inside the ToggleButton (see readings in README.md)
   return (
     <div className="m-4">
       <Button
@@ -67,6 +60,9 @@ const RecipeList = ({
       >
         Create recipe
       </Button>
+      <ToggleButton value="check" selected={favoritesOnly} size="small" onChange={() => setFavoritesOnly(!favoritesOnly)}>
+        {favoritesOnly ? 'Show all' : 'Show favorites'}
+      </ToggleButton>
       <Table>
         <TableHead>
           <TableRow>
@@ -78,8 +74,7 @@ const RecipeList = ({
           </TableRow>
         </TableHead>
         <TableBody>
-          {/* TODO: Make sure you're mapping over filteredRecipes, not necessarily all the recipes */}
-          {recipes.map((recipe) => (
+          {filteredRecipes.map((recipe) => (
             <TableRow key={recipe.id} hover className="cursor-pointer">
               <TableCell onClick={() => setCurrRecipe(recipe)}>
                 {recipe.name}
